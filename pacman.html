@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pacman</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .game-area {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .btns {
+      display: flex;
+      gap: 20px;
+    }
+
+    button {
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-family: monospace;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ffe600;
+      color: #000;
+    }
+
+    #message {
+      margin-top: 20px;
+      color: #ff66c4;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="game-area" id="game">
+    🟡 &nbsp; &nbsp; 👻 👻 🧟 👻 👻 👻 🧟
+  </div>
+
+  <div class="btns">
+    <button onclick="makanMusuh()">➡️ Makan Musuh</button>
+    <button onclick="resetGame()">🔁 Restart</button>
+  </div>
+
+  <div id="message"></div>
+
+  <script>
+    let musuh = ["👻", "👻", "🧟", "👻", "👻", "👻", "🧟"];
+    function makanMusuh() {
+      if (musuh.length > 0) {
+        musuh.shift(); // makan satu musuh dari depan
+        document.getElementById("game").innerHTML = `🟡 &nbsp; &nbsp; ${musuh.join(" ")}`;
+        document.getElementById("message").innerText = "nyam nyam... musuh berkurang!";
+      } else {
+        document.getElementById("message").innerHTML = `
+           Pacman menang.<br>
+          Tapi elo?<br>
+          Masih ngestuck di memory lama awokawokawok
+        `;
+      }
+    }
+
+    function resetGame() {
+      musuh = ["👻", "👻", "🧟", "👻", "👻", "👻", "🧟"];
+      document.getElementById("game").innerHTML = `🟡 &nbsp; &nbsp; ${musuh.join(" ")}`;
+      document.getElementById("message").innerText = "";
+    }
+  </script>
+
+</body>
+</html>

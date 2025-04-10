@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WiFi Connect</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #d0d0d0;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .terminal {
+      background-color: #101010;
+      border: 2px solid #6c7a89;
+      padding: 30px;
+      width: 500px;
+      max-width: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #6c7a8955;
+      text-align: left;
+    }
+
+    .line {
+      color: #b0cfff;
+      margin-bottom: 20px;
+    }
+
+    .error {
+      color: #ff7777;
+    }
+
+    button, input[type="text"] {
+      font-family: monospace;
+      background-color: #2e3c4e;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3d4f6b;
+    }
+
+    input[type="text"] {
+      background-color: #1e1e1e;
+      border: 1px solid #555;
+      color: #fff;
+      width: 70%;
+      margin-right: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .input-group {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal">
+    <div class="line" id="output">user@bondan:~$ sudo connect-wifi</div>
+    <div id="controls">
+      <button onclick="nextStep()">Next</button>
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      'Mendeteksi jaringan...',
+      'Jaringan ditemukan: HATI DIA',
+      'Menghubungkan ke HATI DIA...',
+      '<span class="error">Gagal terhubung: Dia udah connect sama yang lain.</span><br>Saran: ketik <code>moveon</code> dan enter.'
+    ];
+
+    let stepIndex = 0;
+
+    function nextStep() {
+      stepIndex++;
+
+      const output = document.getElementById("output");
+      const controls = document.getElementById("controls");
+
+      if (stepIndex < steps.length - 1) {
+        output.innerHTML = steps[stepIndex];
+      } else if (stepIndex === steps.length - 1) {
+        output.innerHTML = steps[stepIndex];
+        controls.innerHTML = `
+          <div class="input-group">
+            <input type="text" id="userInput" placeholder="Ketik di sini..."/>
+            <button onclick="checkMoveOn()">Enter</button>
+          </div>
+        `;
+      }
+    }
+
+    function checkMoveOn() {
+      const val = document.getElementById("userInput").value.trim().toLowerCase();
+      if (val === "moveon") {
+        stepIndex = 0;
+        document.getElementById("output").innerHTML = 'user@bondan:~$ sudo connect-wifi';
+        document.getElementById("controls").innerHTML = `<button onclick="nextStep()">Next</button>`;
+      } else {
+        alert("Belum bisa moveon, coba ketik lagi 😭");
+      }
+    }
+  </script>
+</body>
+</html>
